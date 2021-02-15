@@ -30,7 +30,7 @@ arr=[1, 2, 5, 7, 9, 11, 13, 15, 17, 19]
 def binary_search(target, start, end, arr):
     if start > end:
         return -1
-    mid = start+end // 2
+    mid = (start + end) // 2 # 괄호가 없으면 우선 순위가 달라짐
     if target < arr[mid]:
         return binary_search(target, start, mid-1, arr)
     elif target == arr[mid]:
