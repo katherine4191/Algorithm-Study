@@ -24,23 +24,14 @@ def make_to_one(n):
         candidates = [30000,30000,30000,30000]
         candidates[0] = arr[a-1] + 1
         if a % 2 == 0:
-            candidates[1] = arr[int(a/2)] + 1
+            candidates[1] = arr[a//2] + 1
         if a % 3 == 0:
-            candidates[2] = arr[int(a/3)] + 1
+            candidates[2] = arr[a//3] + 1
         if a % 5 == 0:  
-            candidates[3] = arr[int(a/5)] + 1
+            candidates[3] = arr[a//5] + 1
         arr[a] = min(candidates)
 
     print(arr[n], end = ' ')
 
 for num in nums:
     make_to_one(num)
-
-'''testcase 생성하기'''
-import random
-def create_input(min, max, N):
-    input_list = random.sample(range(min,max), N)
-    print(input_list)
-
-#create_input(6, 10000, 10)
-
