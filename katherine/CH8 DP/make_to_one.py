@@ -1,48 +1,46 @@
-# n = int(input())
-# storage = list(map(int, input().split()))
-# print(n, storage)
+#n = int(input())
 
+''' 
+input 1:[26]
+output: 3 
+
+input 2: [20730, 16465, 27368, 21803, 29081, 23215, 16419, 12244, 16602, 25045]
+output 2: 10 13 11 13 14 13 11 11 11 10
+
+input 3: [20730, 16465, 27368, 21803, 29081, 23215, 16419, 12244, 16602, 25045]
+output 3: 8 10 9 9 11 11 11 8 11 10 
 '''
-input 1: 4, [1,3,1,5]
-output 1: 8
+nums = [8000, 6814, 2553, 3918, 7034, 5806, 5471, 3012, 6986, 5347]
 
-input 2: 10, [11, 6, 12, 3, 4, 1, 18, 2, 17, 16]
-output 2: 62
+def make_to_one(n):
+    arr = [0 for _ in range(n+1)]
+    arr[0] = 0; arr[1] = 0; arr[2] = 1; arr[3] = 1; arr[4] = 2; arr[5] = 1
 
-input 3: 20, [2, 9, 14, 17, 26, 21, 1, 22, 4, 10, 23, 15, 13, 25, 6, 20, 5, 3, 12, 24]
-output 3: 166
+    if n <= 5: 
+        print(arr[n])
 
-input 4: 15, [1, 100, 1, 1, 1, 100, 1, 100, 100, 1, 1, 100, 100, 100, 1]
-output 4: 502
-'''
+    operaters = [1,2,3,5]
+    for a in range(6, n+1):
+        candidates = [30000,30000,30000,30000]
+        candidates[0] = arr[a-1] + 1
+        if a % 2 == 0:
+            candidates[1] = arr[int(a/2)] + 1
+        if a % 3 == 0:
+            candidates[2] = arr[int(a/3)] + 1
+        if a % 5 == 0:  
+            candidates[3] = arr[int(a/5)] + 1
+        arr[a] = min(candidates)
 
-n, storage = 15, [1, 100, 1, 1, 1, 100, 1, 100, 100, 1, 1, 100, 100, 100, 1]
-table_DP = [0 for _ in range(n)]
-'''my code'''
-# table_DP[0] = storage[0]; table_DP[1] = storage[1]; 
-table_DP[0] = storage[0];
-table_DP[1] = max(storage[0], storage[1]) # dodoong!
+    print(arr[n], end = ' ')
 
-for i in range(2,n):
-    candidates = []
-    # defore max sum
-    candidates.append(table_DP[i-1])
-    # front + my sum
-    '''my code'''
-    # for j in range(i-1):
-    #     candidates.append(table_DP[j]+ storage[i])
-    candidates.append(table_DP[i-2] + storage[i])
-    table_DP[i] = max(candidates)
-
-print(table_DP)
-print(table_DP[n-1])
+for num in nums:
+    make_to_one(num)
 
 '''testcase 생성하기'''
-
 import random
 def create_input(min, max, N):
     input_list = random.sample(range(min,max), N)
     print(input_list)
 
-# create_input(1, 20, 10)
-# create_input(1, 30, 20)
+#create_input(6, 10000, 10)
+
