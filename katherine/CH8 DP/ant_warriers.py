@@ -32,7 +32,11 @@ for i in range(2,n):
 print(table_DP)
 print(table_DP[n-1])
 
+'''testcase 생성하기'''
 import random
 def create_input(min, max, N):
     input_list = random.sample(range(min,max), N)
     print(input_list)
+
+# create_input(1, 20, 10)
+# create_input(1, 30, 20)
