@@ -6,30 +6,30 @@
 3. 모든 노드를 방문할 때 까지 위 알고리즘을 반복한다.
 """
 
-def dijkstra(adjacency_list, start):
+def get_min_node(min_distance_list, visited):
+    min_value = float('inf')
+
+    for i in range(1, len(visited)):
+        if not visited[i] and min_distance_list[i] < min_value:
+            min_value = min_distance_list[i]
+            min_node = i
+
+    return min_node
+
+def dijkstra(visited, adjacency_list, start):
     min_distance_list = [float('inf') for _ in range(len(adjacency_list))] # 모든 노드로의 거리를 무한대로 초기화
     min_distance_list[start] = 0 # 시작점까지의 최소거리는 항상 0
-    not_visited = set(range(len(adjacency_list)))
-    not_visited.remove(0)
+    node_counts = len(adjacency_list) - 1
 
-    # 아직 방문하지 않은 노드가 남아있다면
-    while not_visited:
-        not_visited.remove(start)
-
-        # 최단 거리의 노드 찾고
-        destinations = sorted(adjacency_list[start], key=lambda x: x[1])
-        start_before = start  # 이전 지점을 기억
-        for candidate, _ in destinations:
-            if candidate in not_visited: # 방문하지 않은 노드 중에서 최단 거리 노드를 찾기
-                start = candidate  # 최단 거리의 노드를 다음 반복의 새로운 시작점으로 갱신
-                break
-        else:
-            break
+    for _ in range(node_counts):
+        source_node_num = get_min_node(min_distance_list, visited)  # 방문하지 않았으면서, 최단 거리 source 노드 찾고
+        distance_to_source_node = min_distance_list[source_node_num]  # ---distance---(source)
+        visited[source_node_num] = True  # 방문처리
 
         # 연결 노드의 최단 거리 갱신
-        for destination, cost in destinations:
-            if min_distance_list[destination] > min_distance_list[start_before] + cost:
-                min_distance_list[destination] = min_distance_list[start_before] + cost
+        for destination, edge in adjacency_list[source_node_num]:  # ---distance---(source)---edge---(destination)
+            if min_distance_list[destination] > distance_to_source_node + edge:  # 기존 최단 거리를 갱신할 수 있으면
+                min_distance_list[destination] = distance_to_source_node + edge  # 갱신한다
 
     return min_distance_list
 
@@ -38,6 +38,7 @@ if __name__ == "__main__":
     # node_counts, edge_counts = map(int, input().split())
     # starting_point = int(input())
     # adjacency_list = [[] for _ in range(node_counts + 1)]
+    # visited = [False for _ in range(node_counts + 1)]
     # for _ in range(edge_counts):
     #     source, destination, cost = map(int, input().split())
     #     adjacency_list[source].append((destination, cost))
@@ -52,8 +53,9 @@ if __name__ == "__main__":
         [(3, 1), (6, 2)],
         []
     ]
+    visited = [False for _ in range(len(adjacency_list))]
 
-    result = dijkstra(adjacency_list=adjacency_list, start=starting_point)
+    result = dijkstra(visited, adjacency_list=adjacency_list, start=starting_point)
 
     for i in range(1, len(result)):
         print(result[i])
