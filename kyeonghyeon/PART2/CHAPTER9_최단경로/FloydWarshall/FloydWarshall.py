@@ -22,8 +22,8 @@ def floydwarshall(min_distance_matrix, node_counts):
         if source != junction and destination != junction and source != destination:
             direct = min_distance_matrix[source][destination]  # a -> b
             detour = min_distance_matrix[source][junction] + min_distance_matrix[junction][destination]  # a -> junction -> b
-            if detour < direct:  # junction을 거쳐가는게 빠르다면
-                min_distance_matrix[source][destination] = detour
+            # floyd warshall 알고리즘 점화식 적용
+            min_distance_matrix[source][destination] = min(direct, detour)
 
 
 
