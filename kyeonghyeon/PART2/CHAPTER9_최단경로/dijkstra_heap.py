@@ -26,27 +26,23 @@ heap 다익스트라는 최소 거리 리스트 + 힙큐(최소 거리 노드만
 """
 
 def dijkstra_heap(adjacency_list, start_node):
-
-    DISTANCE, NODE_NUM = 0, 1
-
     min_distance_list = [float('inf') for _ in range(len(adjacency_list))]
     min_distance_list[start_node] = 0
     # 힙큐는 오로지 최소 거리 노드만을 찾기 위한 용도
     hq = [(0, start_node)]
 
     while hq:
-        source_node = heapq.heappop(hq)  # 고려할 source node를 받아온다.
-        source_node_num = source_node[NODE_NUM]
-        distance_to_source_node = source_node[DISTANCE]
+        cost_to_junction, junction = heapq.heappop(hq)  # 고려할 source node를 받아온다.
 
         # 만약 이미 최솟값인 노드라면 다음 노드를 고려하지 않는다. 어차피 가봤자 지금 최솟값보다 항상 큰 거리가 나오니까.
-        if distance_to_source_node > min_distance_list[source_node_num]:
+        if cost_to_junction > min_distance_list[junction]:
             continue
 
-        # source를 거쳐 최소 거리를 갱신할 수 있는지 확인해보자. 새로운 최소거리를 찾아보자
-        for destination, edge in adjacency_list[source_node_num]:
-            if min_distance_list[destination] > distance_to_source_node + edge:  # 새로운 최소 거리가 갱신된다면
-                min_distance_list[destination] = distance_to_source_node + edge  # 갱신된 최소거리를 기억하고
+        # junction을 거쳐 최소 거리를 갱신할 수 있는지 확인해보자. 새로운 최소거리를 찾아보자
+        # 즉, source -- (junction) -- destination  VS  source -- destination  을 비교하는 싸움이다.
+        for destination, cost_to_destination in adjacency_list[junction]:
+            if min_distance_list[destination] > cost_to_junction + cost_to_destination:  # 새로운 최소 거리가 갱신된다면
+                min_distance_list[destination] = cost_to_junction + cost_to_destination  # 갱신된 최소거리를 기억하고
                 heapq.heappush(hq, (min_distance_list[destination], destination))  # (거리, 노드번호) 로 hq에 넣는다.
 
     return min_distance_list

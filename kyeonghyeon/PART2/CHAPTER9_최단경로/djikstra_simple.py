@@ -22,14 +22,15 @@ def dijkstra(visited, adjacency_list, start):
     node_counts = len(adjacency_list) - 1
 
     for _ in range(node_counts):
-        source_node_num = get_min_node(min_distance_list, visited)  # 방문하지 않았으면서, 최단 거리 source 노드 찾고
-        distance_to_source_node = min_distance_list[source_node_num]  # ---distance---(source)
-        visited[source_node_num] = True  # 방문처리
+        junction = get_min_node(min_distance_list, visited)  # 방문하지 않았으면서, 최단 거리 junction 노드 찾고
+        distance_to_junction = min_distance_list[junction]  # (source) --- distance --- (junction)
+        visited[junction] = True  # 방문처리
 
         # 연결 노드의 최단 거리 갱신
-        for destination, edge in adjacency_list[source_node_num]:  # ---distance---(source)---edge---(destination)
-            if min_distance_list[destination] > distance_to_source_node + edge:  # 기존 최단 거리를 갱신할 수 있으면
-                min_distance_list[destination] = distance_to_source_node + edge  # 갱신한다
+        # source -- (junction) -- destination  VS  source -- destination
+        for destination, distance_to_destination in adjacency_list[junction]:  # (source)---distance---(junction)--- distance ---(destination)
+            if min_distance_list[destination] > distance_to_junction + distance_to_destination: # 기존 최단 거리를 갱신할 수 있으면
+                min_distance_list[destination] = distance_to_junction + distance_to_destination  # 갱신한다
 
     return min_distance_list
 
