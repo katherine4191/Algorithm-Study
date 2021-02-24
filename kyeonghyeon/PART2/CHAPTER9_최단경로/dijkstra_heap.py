@@ -30,6 +30,7 @@ def dijkstra_heap(adjacency_list, start_node):
     min_distance_list[start_node] = 0
     # 힙큐는 오로지 최소 거리 노드만을 찾기 위한 용도
     hq = [(0, start_node)]
+    heapq.heapify(hq)  # 힙큐는 명시적으로 heapify하는게 좋다.
 
     while hq:
         cost_to_junction, junction = heapq.heappop(hq)  # 고려할 source node를 받아온다.
