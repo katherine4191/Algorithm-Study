@@ -10,9 +10,9 @@ def valid(nx, ny, row_size, col_size):
     return 0 <= nx < row_size, 0 <= ny < col_size
 
 def go_rear(x, y, graph, direction, DELTAS):
-    direction = abs(direction - 2)
+    # direction = abs(direction - 2)
     dx, dy = DELTAS[direction]
-    nx, ny = x + dx, y + dy
+    nx, ny = x - dx, y - dy  # delta를 빼면 뒤로 돌아간다.
     
     return (nx, ny)
 
@@ -23,7 +23,7 @@ def solution(graph, x, y, direction, row_size, col_size):
     visited[x][y] = True
 
     DELTAS = [(-1, 0), (0, 1), (1, 0), (0, -1)]
-    cnt = 1
+    cnt = 1  # 시작한 부분도 한번 방문해본것과 같으니까
     rotated = 0
 
     while True:
@@ -40,15 +40,16 @@ def solution(graph, x, y, direction, row_size, col_size):
             cnt += 1
             rotated = 0
             continue
-        # 사방으로 갈 수 없는 경우(모두 가봤거나, 모두 바다거나)
-        elif rotated == 4:
+        else: # 못간다면 회전만 한다.
+            rotated += 1
+
+        # 다 돌아봤는데 못간다면(다 가본데거나 바다거나)
+        if rotated == 4:
             # 뒤로 돌아온다.
             x, y = go_rear(x, y, graph, direction, DELTAS)
+            rotated = 0  # x, y가 변하면 항상 rotated 는 초기화
             if graph[x][y] == 1: # 뒤가 바다라면 리턴
                 return cnt
-        # 반시계방향으로 회전
-        else:
-            rotated += 1
 
 
 if __name__ == "__main__":
