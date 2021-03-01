@@ -1,8 +1,5 @@
 def turn_left(orientation):
-    if orientation == 0:
-        return 3
-    else:
-        return orientation - 1
+    return 3 if orientation == 0 else orientation - 1
 
 def valid(x, y, row_size, col_size):
     return 0 <= x < row_size and 0 <= y < col_size
