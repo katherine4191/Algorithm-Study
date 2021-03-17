@@ -12,13 +12,5 @@ table[1], table[2] = 1, 3
 
 for i in range(3, n + 1):
     table[i] = table[i-1] + 2 * table[i-2]
-
+    
 print(table[n] % div_num)
-
-'''testcase 생성하기'''
-import random
-def create_input(min, max, N):
-    input_list = random.sample(range(min,max), N)
-    print(input_list)
-
-#create_input(1, 1000, 10)
