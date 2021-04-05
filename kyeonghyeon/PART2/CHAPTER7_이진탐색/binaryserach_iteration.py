@@ -1,6 +1,6 @@
 def binsearch(arr, start, end, target):
 
-    while start < end:
+    while start <= end:  # start < end 라면 찾고자 하는 대상이 arr[end] 일 때 못찾는다.
         mid = (start + end) // 2
 
         if target < arr[mid]:
@@ -12,7 +12,7 @@ def binsearch(arr, start, end, target):
         else:
             return mid
 
-    if start >= end:
+    if start > end:  # 
         return -1
 
 if __name__ == "__main__":
