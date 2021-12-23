@@ -37,18 +37,6 @@ if table[m] == 10001:
 else:
     print(table[m])
 
-# print(table)
-# print(table[m])
-
-'''testcase 생성하기'''
-import random
-def create_input(min, max, N):
-    input_list = random.sample(range(min,max), N)
-    print(input_list)
-
-# create_input(1, 100, 10)
-# create_input(1, 10000, 1)
-
 '''Ch3.Greedy의 거스름돈 구하기 문제에서의 정당성'''
 # 가지고 있는 동전 중에서 큰 단위가 항상 작은 단위의 배수이므로 작은 단위의 동전들을 조합해 다른 해가 나올 수 X 
 # 만약, 화폐이 단위가 무작위로 주어졌을 때에 그리디 알고리즘으로 해결할 수 없다. -> 다이나믹, 그래프 알고리즘
